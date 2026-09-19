@@ -321,6 +321,13 @@
     .forecast-tasks{ grid-template-columns: 1fr; }
   }
 
+  .retainer-note{
+    margin-top: 24px;
+    font-family: var(--mono);
+    font-size: 0.85rem;
+    color: var(--slate);
+  }
+
   /* ---------- ABOUT ---------- */
   .about-grid{
     display:grid;
@@ -468,6 +475,23 @@
     gap: 10px;
   }
 </style>
+  <!-- Meta Pixel Code -->
+<script>
+!function(f,b,e,v,n,t,s)
+{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];
+s.parentNode.insertBefore(t,s)}(window, document,'script',
+'https://connect.facebook.net/en_US/fbevents.js');
+fbq('init', '1764518524592513');
+fbq('track', 'PageView');
+</script>
+<noscript><img height="1" width="1" style="display:none"
+src="https://www.facebook.com/tr?id=1764518524592513&ev=PageView&noscript=1"
+/></noscript>
+<!-- End Meta Pixel Code -->
 </head>
 <body>
 
@@ -554,6 +578,7 @@
         <div class="forecast-rate">from $30/h<span>specialist rate</span></div>
       </div>
     </div>
+    <p class="retainer-note">Ongoing retainer arrangements available</p>
   </div>
 </section>
 
@@ -564,7 +589,7 @@
       <span class="caption">Jonathan Vieira · Scotland</span>
     </div>
     <div class="about-copy">
-      <h2 style="margin-bottom:24px; font-size: clamp(1.6rem, 3vw, 2.1rem); font-style: italic; font-weight: 500;">Based in Scotland, working with clients anywhere</h2>
+      <h2 style="margin-bottom:24px; font-size: clamp(1.6rem, 3vw, 2.1rem); font-style: italic; font-weight: 500;">Based in Scotland, working with clients Worldwide</h2>
       <p><strong>Digital Umbrella</strong> is run entirely by me, Jonathan Vieira. No account managers and no hand-offs. When you hire Digital Umbrella, you work directly with me.</p>
       <p>I provide reliable support across two key areas: taking care of the recurring admin that eats into your working day, and providing technical assistance when something needs a more experienced, digital touch.</p>
       <p>Based in Scotland and working fully remotely, I offer flexible support to businesses wherever they're based, with hours that can accommodate clients across different time zones.</p>
@@ -662,8 +687,23 @@
     const body = encodeURIComponent(
       `Name: ${name}\nEmail: ${email}\nService: ${service}\n\n${message}`
     );
+
+    if (typeof fbq !== 'undefined') {
+      fbq('track', 'Lead');
+    }
+
     window.location.href = `mailto:digitalumbrella@proton.me?subject=${encodeURIComponent('L#4E - New enquiry via Digital Umbrella site')}&body=${body}`;
     status.classList.add('visible');
+  });
+
+  // Meta Pixel: track WhatsApp button clicks (contact section button + floating button)
+  // Uses event delegation on document so it catches both buttons regardless of
+  // where they sit in the page or when they're added to the DOM.
+  document.addEventListener('click', (e) => {
+    const waLink = e.target.closest('a[href*="wa.me"]');
+    if (waLink && typeof fbq !== 'undefined') {
+      fbq('track', 'Contact');
+    }
   });
 </script>
 <a class="whatsapp-float" href="https://wa.me/447377877361?text=Hi%2C%20I%27d%20like%20to%20enquire%20about%20Virtual%20Assistance%20-%20FW4" target="_blank" rel="noopener" aria-label="Message on WhatsApp">
